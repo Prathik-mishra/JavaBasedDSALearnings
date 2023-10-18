@@ -134,30 +134,30 @@ public class implementation_Of_Graph {
     public static void main(String[] args) {
 
         //for unweighted graph:
-//        int vertex = 4;
-//        ArrayList<Edge>[] graph= new ArrayList[4];
-//        createGraph(graph);
-//
-//        //for printing neighbours of 2:
-//        for(int i=0; i<graph[2].size(); i++){
-//            Edge e = graph[2].get(i);
-//            System.out.print(e.dest+" ");
-//
-//        }
+       int vertex = 4;
+       ArrayList<Edge>[] graph= new ArrayList[4];
+       createGraph(graph);
+
+       //for printing neighbours of 2:
+       for(int i=0; i<graph[2].size(); i++){
+           Edge e = graph[2].get(i);
+           System.out.print(e.dest+" ");
+
+       }
 
         //for weighted graph:
-//        int vertex = 4;
-//        ArrayList<WeightedEdge>[] graph= new ArrayList[4];
-//        createWeightedGraph(graph);
-//
-//        //for printing neighbours of 2:
-//        for(int i=0; i<graph[2].size(); i++){
-//            WeightedEdge e = graph[2].get(i);
-//            System.out.println("edge neighbour -> "+e.dest+", edge Weight -> "+e.weight);
-//        }
+       int vertex = 4;
+       ArrayList<WeightedEdge>[] graph= new ArrayList[4];
+       createWeightedGraph(graph);
 
-        //for bfs traversal:
-//        int v = 7;
+       //for printing neighbours of 2:
+       for(int i=0; i<graph[2].size(); i++){
+           WeightedEdge e = graph[2].get(i);
+           System.out.println("edge neighbour -> "+e.dest+", edge Weight -> "+e.weight);
+       }
+
+        for bfs traversal:
+       int v = 7;
         /*
                 1 --- 3
                /      | \
@@ -166,21 +166,21 @@ public class implementation_Of_Graph {
                 2 --- 4
          */
 
-//        ArrayList<Edge> graph[] = new ArrayList[v];
-//        createGraph(graph);
-//        bfs(graph,v);
+       ArrayList<Edge> graph[] = new ArrayList[v];
+       createGraph(graph);
+       bfs(graph,v);
 
 
-        //if a graph is given in different components manner than these will be some changes:
-//        int v = 7;
-//        ArrayList<Edge> graph[] = new ArrayList[v];
-//        boolean[] visit = new boolean[v];
-//        createGraph(graph);
-//        for(int i=0; i<v; i++){
-//            if(visit[i] == false){
-//                bfs1(graph,v,visit,i);
-//            }
-//        }
+        if a graph is given in different components manner than these will be some changes:
+       int v = 7;
+       ArrayList<Edge> graph[] = new ArrayList[v];
+       boolean[] visit = new boolean[v];
+       createGraph(graph);
+       for(int i=0; i<v; i++){
+           if(visit[i] == false){
+               bfs1(graph,v,visit,i);
+           }
+       }
 
         //below code is for dfs traversal:
         int v = 7;
