@@ -1,0 +1,168 @@
+Custom ArrayList - 
+
+ArrayList is a dynamic array which mean we can dynamically add anything to it or even delete it unlike array where we can only add the amount of data which we specify at the declaration of array. When we do int[] arr = new int[10] now we are only restrict to add only 10 integers at different position in the array.
+
+But what if we want a datastructor where we can add mulitiple elements without restriction. This can be done using ArrayList. Why ArrayList is called a dynamic array because it dynamically changes its size according to the users input. If user wants 100 elements then we can add 100 elements without specifying beforehand. How does it do that?
+
+ArrayList is nothing but a array but with additional feature. Internal implementation of arrayList is actually Array only. So the arraylist dynamic size increase if based on a logic where if the existing array is getting fulled then we create a new array of 2*array.length.
+We can have a default array with size 10. And as soon as we know that the array is getting full we can increase the size of the array by creating a temp array = new int[2*arr.length] and copying all the element of array to temp array and then assigning the reference of temp array to arr; arr = temp;
+So now when the garbage collector runs it will remove sthe previous values of array.
+
+How we  make our own array?
+We can start by creating a class CustomArrayList;
+In that we can 2 variables default_size and size. We will know about size later
+Now when we create a object of this class we want it to declare the size by default value.
+Once the array is created of size 10. Then we can work on add method
+add method will have int num paramter. Now we will use size which is nothing but a pointer which keeps count that is the pointer going out of bounds.
+So we will add the element on the pointer. pointer will be set as 0 initilaly.
+Now what will happend if we add 11th element then we want the array to resize to 20. 
+So we can write the method for that too. There we will create a new temp array and copy all the element and assign the refrent to our main array. 
+and then add our element.
+Like wise we can create a get method whihc will return index value that we pass. 
+We can create a delete method as well. Where we will just shift the element in the front to the left.
+And like this we can create many method of arraylsit in our custom arraylist.
+
+But the problem we will face is when we want to create a custom arraylist of different types like Double, String, Float, Long, Boolean. We cannot do it like this since we have hardcoded it as int. Then we need to make all of these types of classes and the code is not modular. We want to create a arraylist code which is reusable.
+
+Generics - It allows you to create a classes, Intefaces, and methods that can work with differnet type. It helps to create a reusable code. It will baiscally help us to create what ever class we want. We just want to make sure we specify it when we create the object of that class.
+
+So how does it work - It  uses <ClassName>. You know when we create arraylist we do this Arraylist<Integer> list = new ArrayList<>();
+So basically we are doing this. the value if <> will represent what type of our arraylist will be. SO how do we implement it?
+Simple when we create our class we can just have it as class MyCustomArraylist<T> here T is what object we passed its a parameter. Then we can create a type of T[] arr  = new T[]; But this wont work because what if we dont pass anything then what will T be. So for that reason we need to make a arr of Object class like this.
+Object[] arr = new Object[Size];
+	
+And then we can have add(T userInput) where T represents the class But now even if we dont pass any thing it will bydefault will be a Object class only becuase in java everything inherits object class.
+
+And we can return T in get method as well like public T get (int index);
+Below is my code for this custom Arraylist;
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class MyArrayList<T>{
+	final static int DEFAULT_SIZE = 5;
+	Object[] arr;
+	int size = 0;
+
+	MyArrayList(){
+		arr = new Object[DEFAULT_SIZE];
+	}
+
+	public void add(T num){
+		
+
+		if(size == arr.length-1){
+			resize(arr.length-1);
+			arr[size++] = num;
+		}
+		else{
+			arr[size++] = num;
+			}
+	}
+
+	public void resize(int num){
+		Object[] temp = new Object[num*2];
+
+		for(int i =0;i<arr.length;i++){
+			temp[i] = arr[i];
+		}
+		arr = temp;
+	}
+
+	public T get(int index){
+		return (T)(arr[index]);
+	}
+
+	public String toString(){
+		return Arrays.toString(arr);
+	}
+}
+
+public class Main
+{
+	
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		//your code here
+		MyArrayList<String> list = new MyArrayList<String>();
+		list.add("4");
+		list.add("5");
+		
+		
+		System.out.println(list.toString());
+		
+	}
+}
+
+Comparables - In java we can compare strings, integers or any wrapper class but how can we compare Object. So we cannot use basic operator to check which class is bigger then other. So how do we do it?
+We can use Comparable Inteface. Comparable allows us to compare objects of same type. This interface allows us to compare object by building our own function. Comparable interface has 1 abstract method called toCompare which when we extend the interface we need to implement that method. 
+And inside that mehod we can provide with what values we want to compare that object.
+
+So for eg: if we have a class which takes name and percentage. And we want to compare object based on percentage. We can jsut extend the compareble interface. Impelment the toCompare method where toCompare(ClassName obj, ClassName obj2) and inside the method we will return if(obj.percent > obj2.percent) true || false.
+And later while calling the method we can just do obj1 > obj2 and if its bigger then return 1 is bigger or else 2 is bigger.
+THe function like sort uses this comparable intercae to compare values of the object. Like we use it on Array. Array is what a class.
+
+Lambda function - Lambda functions, also known as anonymous functions or function literals, are a feature introduced in Java 8. They allow you to create small, concise blocks of code that can be treated as values and passed around.
+
+Lambda functions in Java are primarily used to implement functional interfaces, which are interfaces that define a single abstract method. The lambda function provides a concise way to define the implementation of that single abstract method.
+
+Like for exmaple the sort method we can use this lambda for eg. Arrays.sort((a,b) -> a-b); Now this array is sorted in decending order. How this lambda function will first iterate thorug the array. and it will take 2 values a and b. a and b are just elements of the array. Now we will do a-b if a-b is <0 means a is less than b similary if a-b > 0 means b is smaller than a. So based on that value if the opearation a-b is < 0 we will push the smaller elemnet at last. Sort function uses more complex logic but this is how it kinda works.
+
+For short function we can have something like tihs - interface MathOperation {
+    int operate(int a, int b);
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Lambda function to implement addition
+        MathOperation addition = (a, b) -> a + b;
+        System.out.println("Addition: " + addition.operate(5, 3));
+
+        // Lambda function to implement subtraction
+        MathOperation subtraction = (a, b) -> a - b;
+        System.out.println("Subtraction: " + subtraction.operate(5, 3));
+    }
+}
+
+Exception Handling - Exception in java is a point in a program when its running. That it faces a difucutl phase while solving the problem and it needs your help to do so. If you dont help the program will crash.
+Exception are is an event which occurs during the execution of a program that disrupts the flow of the program. And which is recoverable if we provide or handle that exception before hand.
+
+Thsi is exception and also exception and error is not the same thing. Exception is something if taken care of it properly can be handle but the error we cannot. When a error occurs that means the program is not recoverable and the program is crashed. At that point in the program we cannot do anything like stackOverFlow error. WHen the memory is full. We cannot handle that.
+But num/0 we can handle this so its a arithmetic Exception.
+
+In Java Object is a Top most class. And Throwable extends Object. Now 2 classes Extends Throwable class. Exception and Error. We dont need to cover about Error class.
+Exception class has 2 more classes. Checked Exception and UnChecked Exception.
+Checked Exception must be handled within the code itself using try catch block. Otherwise it will give compilation error.
+And Uncheck expcetion are runtime exception which dont need to handle but will still inturrupt the flow of execution of the program.
+We can also handle it by using try and catch block.
+Uncheck exception are like ArithmeticException, NullPointerException or the exception which occurs due to programmer fault. And is fixabel quickly.
+
+Examples of checked exceptions in Java include IOException, SQLException, and ClassNotFoundException.These kind of exception we need to handle in try and catch block while writing the code other wise it will give compilation error.
+
+try and catch - try and catch block is used to handle exceptions. if we know that this statment or line of code might give us exception then we can just write it inside try block and if there is an exceptino it will be catched by catchblock.
+like.
+
+try{
+code which might give exception
+} catch (ExceptionCLassNameWhichYouThinkItWillGive e){
+what you want to do after the exception is caught
+}
+
+try{
+a = 1/0;
+}
+catch (ArithmeticException e){
+System.out.println(e.getMessage());
+}
+
+We can have multiple catch block as well 
+Finally - this is a block whihc will print no matter if we catch the exception or not.
+
+throw - this keyword is used to throw a exception. For eg we can do if(b == 0) then throw new ArithmeticException. And we need to tell the class that this function might throw an exception we in class we write it as 
+public class ThisClassMightThrowException throws ArithmeticException {
+a = 1,b=0
+if(b == 0){
+	throw new ArithmeticException();
+}
+return a/b;
+}
